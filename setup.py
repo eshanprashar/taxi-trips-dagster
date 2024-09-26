@@ -4,11 +4,16 @@ setup(
     name="taxi_trips",
     packages=find_packages(exclude=["taxi_trips_tests"]),
     install_requires=[
-        "dagster",
+        "dagster==1.7.*",
         "dagster-aws",
         "dagster-cloud",
+        "dagster-duckdb",
         "pandas",
-        "matplotlib"
+        "matplotlib",
+        "geopandas",
+        "kaleido",
+        "plotly",
+        "shapely",
     ],
     extras_require={"dev": ["dagster-webserver", "pytest"]},
 )

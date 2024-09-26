@@ -1,5 +1,0 @@
-[32m2024-09-26 09:51:44 -0500[0m - dagster - [34mDEBUG[0m - __ASSET_JOB - 7a0b30bb-39e6-4f1b-b235-917227ce1ed3 - 86114 - LOGS_CAPTURED - Started capturing logs in process (pid: 86114).
-[32m2024-09-26 09:51:44 -0500[0m - dagster - [34mDEBUG[0m - __ASSET_JOB - 7a0b30bb-39e6-4f1b-b235-917227ce1ed3 - 86114 - hackernews_topstory_ids - STEP_START - Started execution of step "hackernews_topstory_ids".
-[32m2024-09-26 09:51:45 -0500[0m - dagster - [34mDEBUG[0m - __ASSET_JOB - 7a0b30bb-39e6-4f1b-b235-917227ce1ed3 - 86114 - hackernews_topstory_ids - STEP_OUTPUT - Yielded output "result" of type "Nothing". (Type check passed).
-[32m2024-09-26 09:51:45 -0500[0m - dagster - [34mDEBUG[0m - __ASSET_JOB - 7a0b30bb-39e6-4f1b-b235-917227ce1ed3 - 86114 - hackernews_topstory_ids - ASSET_MATERIALIZATION - Materialized value hackernews_topstory_ids.
-[32m2024-09-26 09:51:45 -0500[0m - dagster - [34mDEBUG[0m - __ASSET_JOB - 7a0b30bb-39e6-4f1b-b235-917227ce1ed3 - 86114 - hackernews_topstory_ids - STEP_SUCCESS - Finished execution of step "hackernews_topstory_ids" in 608ms.

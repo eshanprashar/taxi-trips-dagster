@@ -1,8 +1,13 @@
-dagster
+dagster==1.7.*
 dagster-aws
 dagster-cloud
+dagster-duckdb
 pandas
 matplotlib
+geopandas
+kaleido
+plotly
+shapely
 
 [dev]
 dagster-webserver
