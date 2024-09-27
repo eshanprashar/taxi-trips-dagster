@@ -27,7 +27,7 @@ def manhattan_stats(database:DuckDBResource) -> None:
         where borough = 'Manhattan' and geometry is not null
         group by zone, borough, geometry
     '''
-    with database.get_connection as conn:
+    with database.get_connection() as conn:
         trips_by_zone = conn.execute(query).fetch_df()
 
     trips_by_zone['geometry'] = gpd.GeoSeries.from_wkt(trips_by_zone['geometry'])
@@ -76,7 +76,7 @@ def trips_by_week(database:DuckDBResource)-> None:
             from trips
             where date_trunc('week',pickup_datetime) = date_trunc('week', '{current_date_str}'::date)
         '''
-        with database.get_connection as conn:
+        with database.get_connection() as conn:
             week_data = conn.execute(query).fetch_df()
         
         aggregate = week_data.agg({

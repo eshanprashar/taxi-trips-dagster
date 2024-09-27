@@ -6,8 +6,36 @@ from . import constants
 from dagster import asset, AssetExecutionContext
 from ..partitions import monthly_partition
 
+@asset
+def tax_zones_file() -> None:
+    '''The raw csv file for taxi zones dataset. Sourced from NYC Open Data portal.'''
+    raw_taxi_zones = requests.get(
+            'https://data.cityofnewyork.us/api/views/755u-8jsi/rows.csv?accessType=DOWNLOAD'
+        )
+    with open(constants.TAXI_ZONES_FILE_PATH, 'wb') as f:
+        f.write(raw_taxi_zones.content)
+
 @asset(
-    partitions_def=monthly_partition
+    deps=['tax_zones_file']
+)
+def taxi_zones(database: DuckDBResource) -> None:
+    '''The raw taxi zones dataset, loaded into a DuckDB table.'''
+    sql_query = f'''
+    create or replace table zones as (
+        select 
+            LocationID as zone_id,
+            borough as borough,
+            zone as zone,
+            the_geom as geometry
+        from '{constants.TAXI_ZONES_FILE_PATH}'
+    );
+    '''
+    with database.get_connection() as conn:
+        conn.execute(sql_query)
+
+@asset(
+    partitions_def=monthly_partition,
+    compute_kind='NYC Open Data API',
 )
 def taxi_trips_file(context: AssetExecutionContext) -> None:
     '''The raw parquet files for taxi trips dataset. Sourced from NYC Open Data portal.'''
@@ -18,15 +46,6 @@ def taxi_trips_file(context: AssetExecutionContext) -> None:
     )
     with open(constants.TAXI_TRIPS_TEMPLATE_FILE_PATH.format(month_to_fetch), 'wb') as f:
         f.write(raw_trips.content)
-
-@asset
-def tax_zones_file() -> None:
-    '''The raw csv file for taxi zones dataset. Sourced from NYC Open Data portal.'''
-    raw_taxi_zones = requests.get(
-            'https://data.cityofnewyork.us/api/views/755u-8jsi/rows.csv?accessType=DOWNLOAD'
-        )
-    with open(constants.TAXI_ZONES_FILE_PATH, 'wb') as f:
-        f.write(raw_taxi_zones.content)
 
 @asset(
     deps=['taxi_trips_file'],
@@ -57,20 +76,3 @@ def taxi_trips(context: AssetExecutionContext, database: DuckDBResource) -> None
     with database.get_connection() as conn:
         conn.execute(query)
 
-@asset(
-    deps=['tax_zones_file']
-)
-def taxi_zones(database: DuckDBResource) -> None:
-    '''The raw taxi zones dataset, loaded into a DuckDB table.'''
-    sql_query = '''
-    create or replace table zones as (
-        select 
-            LocationID as zone_id,
-            borough as borough,
-            zone as zone,
-            the_geom as geometry
-        from 'data/raw/taxi_zones.csv'
-    );
-    '''
-    with database.get_connection() as conn:
-        conn.execute(sql_query)

@@ -14,6 +14,8 @@ setup(
         "kaleido",
         "plotly",
         "shapely",
+        "fastapi",
+        "uvicorn",
     ],
     extras_require={"dev": ["dagster-webserver", "pytest"]},
 )
