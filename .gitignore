@@ -6,7 +6,6 @@ dist/
 .env
 *.log
 *.tmp
-*.png
 
 # Ignore large datasets and raw data
 taxi_trips/data/raw/
