@@ -36,8 +36,15 @@ const MonthlyTripChart = () => {
       });
   }, []);
 
+  // Helper function to format the date from "YYYY-MM" to "Month-'YY"
+  const formatDate = (dateString) => {
+    const [year, month] = dateString.split('-');
+    const date = new Date(`${year}-${month}-01`);
+    return date.toLocaleDateString('en-US', { month: 'short', year: '2-digit' });
+  };
+
   const data = {
-    labels: tripData.map(trip => trip.partition_date),
+    labels: tripData.map(trip => formatDate(trip.partition_date)), // Format the date here
     datasets: [
       {
         label: 'Trip Count',

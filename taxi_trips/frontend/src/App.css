@@ -28,6 +28,34 @@
   color: #61dafb;
 }
 
+/* Add margin between charts and buttons */
+.chart-container {
+  margin-top: 20px;  /* Add margin between the charts */
+}
+
+.toggle-buttons {
+  margin-bottom: 20px;  /* Add margin below buttons */
+}
+
+/* Optional: Style buttons for better UI */
+button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:focus {
+  outline: none;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

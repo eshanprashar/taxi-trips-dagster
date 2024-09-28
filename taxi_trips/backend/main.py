@@ -29,3 +29,21 @@ def get_monthly_trips():
     conn = duckdb.connect(constants.DUCKDB_PATH)
     df = conn.execute(query).fetch_df()
     return df.to_dict(orient='records')
+
+@app.get("/monthly_trips_by_borough")
+def get_monthly_trips_by_borough():
+    query = """
+        SELECT 
+            zones.borough, 
+            trips.partition_date,
+            COUNT(*) as num_trips
+        FROM trips
+        LEFT JOIN zones ON trips.pickup_zone_id = zones.zone_id
+        WHERE zones.borough IS NOT NULL
+        GROUP BY zones.borough, trips.partition_date
+        ORDER BY trips.partition_date, zones.borough;
+    """
+    conn = duckdb.connect(constants.DUCKDB_PATH)
+    df = conn.execute(query).fetch_df()
+    return df.to_dict(orient='records')
+    
