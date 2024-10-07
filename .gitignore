@@ -163,6 +163,3 @@ cython_debug/
 taxi_trips/data/raw/
 taxi_trips/data/staging/
 taxi_trips/data/*.duckdb
-
-# Ignore tests folder
-tests/
