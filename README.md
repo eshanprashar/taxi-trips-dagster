@@ -20,8 +20,12 @@ Once this is done, you should be able to view the Dagster UI using the line
 dagster dev
 ```
 
+### Implementation Gotchas
+Before running `dagster dev`, the user should make sure to check environment variables:
+* The variables in `.env` file are assigned valid values. Since this project comes in with built-in S3 integration, Dagster will not run the code unless valid AWS access keys and a bucket name are provided. 
+
 # Dagster UI: Assets and Materialization
-Once you open the UI, you should see an _asset lineage chart_ which has the following 7 components:
+Once you define variables in `.env` file, you should be able to open the UI and see an _asset lineage chart_ which has the following 7 components:
 - taxi_zones_file
 - taxi_trips_file
 - taxi_zones
@@ -32,13 +36,11 @@ Once you open the UI, you should see an _asset lineage chart_ which has the foll
 
 Materializing these assets simply means running the functions defined to create these assets. When assets are materialized, data is stored in `taxi_trips > data`. Since these generated data can be large in size, I added paths for `raw` and `staging` folders, which have parquet and duckdb files respectively, to `gitignore`. 
 
-## Some gotchas before materializing assets
-Before materializing assets, the user should make sure to check 2 things:
-1. The variables in `.env` file are assigned valid values. Since this project comes in with built-in S3 integration, Dagster will not run the code unless valid AWS access keys and a bucket name are provided. 
-2. In the file `assets > constants.py`, make sure to check the paths of all constants defined in assets. Asset definitions are in `trips.py` and `metrics.py`. 
+### Implementation Gotchas
+* In the file `assets > constants.py`, make sure to check the paths of all constants defined in assets. Asset definitions are in `trips.py` and `metrics.py`. 
 
 Once assets are materialized, the screen should look like this:
-![Alt text](image.png)
+![Dagster UI](/Users/eshan23/taxi-trips-dagster/taxi_trips/images/dagster_UI.png)
 
 
 # Running the backend
@@ -49,7 +51,7 @@ To run the backend, type
 uvicorn main:app --reload
 ```
 from the backend folder on your terminal. Doing that should lead to a browser window like this:
-![Alt text](image-1.png)
+![Backend](/Users/eshan23/taxi-trips-dagster/taxi_trips/images/backend.png)
 
 # Running the REACT frontend
 Initially, I tried to setup a file system myself, however when that did not work for a couple of hours, I decided to fall back on **Create React App (CRA) package** which provides everything built-in (Webpack, Babel etc.)
@@ -59,5 +61,5 @@ While this project comes built in with only 2 visualizations, more can be added 
 PORT=3001 npm start
 ```
 PORT=3001 is optional, but I did not because Dagster UI was already using PORT=3000 (the default). Running this successfully will yield a page like so:
-![Alt text](image-2.png)
+![Frontend](/Users/eshan23/taxi-trips-dagster/taxi_trips/images/frontend.png)
 The user can toggle between the two charts. 

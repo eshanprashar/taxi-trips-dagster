@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="taxi_trips",
-    packages=find_packages(exclude=["taxi_trips_tests"]),
+    packages=find_packages(exclude=["tests"]),
     install_requires=[
         "dagster==1.7.*",
         "dagster-aws",
