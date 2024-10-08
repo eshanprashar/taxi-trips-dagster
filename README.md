@@ -4,7 +4,7 @@ While there is support for AWS integration in this project, I haven't worked on 
 This project also has a built-in integration with github actions.
 
 # Data Pipeline
-![ELT Pipeline](/Users/eshan23/taxi-trips-dagster/images/ELT_Dagster.jpg)
+![ELT Pipeline](images/ELT_Dagster.jpg)
 * Extraction, Load and Transform assets are managed through Dagster. Dagster provides the flexibility to add partitions to extraction processes, create schedules and manage partitions in different containers. For now, all of our ELT processes are handled in local, with the option to return and save objects in a pre-defined S3 bucket. 
 
 * Backend APIs can be powered through assets that are materialized in Dagster, for example, a DuckDB table, that can be queried to get specific metrics
@@ -48,7 +48,7 @@ Materializing these assets simply means running the functions defined to create 
 * In the file `assets > constants.py`, make sure to check the paths of all constants defined in assets. Asset definitions are in `trips.py` and `metrics.py`. 
 
 Once assets are materialized, the screen should look like this:
-![Dagster UI](/Users/eshan23/taxi-trips-dagster/taxi_trips/images/dagster_UI.png)
+![Dagster UI](images/dagster_UI.png)
 
 
 # Running the backend
@@ -59,7 +59,7 @@ To run the backend, type
 uvicorn main:app --reload
 ```
 from the backend folder on your terminal. Doing that should lead to a browser window like this:
-![Backend](/Users/eshan23/taxi-trips-dagster/taxi_trips/images/backend.png)
+![Backend](images/backend.png)
 
 # Running the REACT frontend
 Initially, I tried to setup a file system myself, however when that did not work for a couple of hours, I decided to fall back on **Create React App (CRA) package** which provides everything built-in (Webpack, Babel etc.)
@@ -69,5 +69,5 @@ While this project comes built in with only 2 visualizations, more can be added 
 PORT=3001 npm start
 ```
 PORT=3001 is optional, but I did not because Dagster UI was already using PORT=3000 (the default). Running this successfully will yield a page like so:
-![Frontend](/Users/eshan23/taxi-trips-dagster/taxi_trips/images/frontend.png)
+![Frontend](images/frontend.png)
 The user can toggle between the two charts. 
