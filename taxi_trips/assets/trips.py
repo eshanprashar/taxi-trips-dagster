@@ -6,7 +6,9 @@ from . import constants
 from dagster import asset, AssetExecutionContext
 from ..partitions import monthly_partition
 
-@asset
+@asset(
+    compute_kind='NYC Open Data API',
+)
 def tax_zones_file() -> None:
     '''The raw csv file for taxi zones dataset. Sourced from NYC Open Data portal.'''
     raw_taxi_zones = requests.get(
@@ -16,7 +18,8 @@ def tax_zones_file() -> None:
         f.write(raw_taxi_zones.content)
 
 @asset(
-    deps=['tax_zones_file']
+    deps=['tax_zones_file'],
+    compute_kind='DuckDB',
 )
 def taxi_zones(database: DuckDBResource) -> None:
     '''The raw taxi zones dataset, loaded into a DuckDB table.'''
@@ -50,6 +53,7 @@ def taxi_trips_file(context: AssetExecutionContext) -> None:
 @asset(
     deps=['taxi_trips_file'],
     partitions_def=monthly_partition,
+    compute_kind='DuckDB',
 )
 def taxi_trips(context: AssetExecutionContext, database: DuckDBResource) -> None:
     '''The raw taxi trips dataset, loaded into a DuckDB table.'''
