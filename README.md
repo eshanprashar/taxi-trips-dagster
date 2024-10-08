@@ -3,6 +3,14 @@ I've used Dagster's [sample project](https://github.com/dagster-io/project-dagst
 While there is support for AWS integration in this project, I haven't worked on making it flexible, i.e. allowing the user to choose between local and cloud storage. If we return an object for assets defined in `taxi_trips > assets > trips.py and metrics.py`, they are automatically stored in an S3 bucket initialized by me. 
 This project also has a built-in integration with github actions.
 
+# Data Pipeline
+![ELT Pipeline](/Users/eshan23/taxi-trips-dagster/images/ELT_Dagster.jpg)
+* Extraction, Load and Transform assets are managed through Dagster. Dagster provides the flexibility to add partitions to extraction processes, create schedules and manage partitions in different containers. For now, all of our ELT processes are handled in local, with the option to return and save objects in a pre-defined S3 bucket. 
+
+* Backend APIs can be powered through assets that are materialized in Dagster, for example, a DuckDB table, that can be queried to get specific metrics
+
+* These metrics can be then visualized using a simple REACT frontend module
+
 # Getting Started 
 To get started on this project, after cloning the repo, you should set up a conda environment like so:
 ```
