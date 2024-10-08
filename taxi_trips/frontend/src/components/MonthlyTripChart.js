@@ -27,7 +27,7 @@ const MonthlyTripChart = () => {
   const [tripData, setTripData] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:8000/monthly_trips')
+    axios.get('http://localhost:8000/trips_monthly')
       .then(response => {
         setTripData(response.data);
       })

@@ -16,9 +16,9 @@ app.add_middleware(
 
 @app.get("/")
 def read_root():
-    return {"message": "Welcome to the Taxi Trips API! Use /monthly_trips to fetch data."}
+    return {"message": "Welcome to the Taxi Trips API! Use /trips_monthly to fetch data."}
 
-@app.get("/monthly_trips")
+@app.get("/trips_monthly")
 def get_monthly_trips():
     query = """
     SELECT partition_date, COUNT(*) as trip_count
@@ -30,7 +30,7 @@ def get_monthly_trips():
     df = conn.execute(query).fetch_df()
     return df.to_dict(orient='records')
 
-@app.get("/monthly_trips_by_borough")
+@app.get("/trips_monthly_by_borough")
 def get_monthly_trips_by_borough():
     query = """
         SELECT 

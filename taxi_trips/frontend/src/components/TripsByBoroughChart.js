@@ -26,7 +26,7 @@ const TripsByBoroughChart = () => {
 
   useEffect(() => {
     // Fetch data from FastAPI backend
-    axios.get('http://localhost:8000/monthly_trips_by_borough')  // Use your backend URL
+    axios.get('http://localhost:8000/trips_monthly_by_borough')  // Use your backend URL
       .then(response => {
         setBoroughData(response.data);
       })
