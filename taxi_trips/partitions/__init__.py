@@ -1,9 +1,9 @@
 from dagster import MonthlyPartitionsDefinition
 from dagster import WeeklyPartitionsDefinition
-from ..assets import constants
+from taxi_trips.assets.constants import START_DATE, END_DATE
 
-start_date = constants.START_DATE
-end_date = constants.END_DATE
+start_date = START_DATE
+end_date = END_DATE
 
 monthly_partition = MonthlyPartitionsDefinition(
     start_date = start_date,
